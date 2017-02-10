@@ -4,7 +4,7 @@
 \alias{keggList}
 \title{Get KEGG Database or Entry List}
 \usage{
-keggList(x)
+keggList(keywords)
 }
 \arguments{
 \item{x}{string. Database(s) or entry[ies], using '+' to join.}

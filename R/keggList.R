@@ -2,9 +2,9 @@
 #'
 #' Returns a list of entry identifiers and associated definition
 #' for a given database or a given set of database entries.
-#' @export keggList
-#' @aliases keggList
-#' @usage keggList(x)
+#' @include parse_kEGG_URL.R
+#' @export
+
 #' @param x string. Database(s) or entry[ies], using '+' to join.
 #' @return dataframe. The table of particular contents.
 #' @examples
@@ -18,10 +18,7 @@
 #' keggList('hsa:10458+ece:Z5100')
 #'
 
-keggList = function(dbname){
-  url = str_c('http://rest.kegg.jp/list/', dbname)
-  lines = readLines(url)
-  dtframe = str_split(lines, '(\\t| \\| )', simplify = T)
-  dtframe = as.data.frame(dtframe)
-  return(dtframe)
+keggList = function(keywords){
+  url = str_c('http://rest.kegg.jp/list/', keywords)
+  parse_KEGG_URL(url)
 }
