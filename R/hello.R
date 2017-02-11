@@ -1,12 +1,13 @@
-# Hello, world!
+#' Hello, Von Weber!
+#'
+#' This is an example function named 'hello',
+#' which prints 'Hello, Von Weber!'.
 #
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
+#' @details  You can learn more about package authoring with RStudio at:
+#'
+#' \url{http://r-pkgs.had.co.nz/}
+#' @examples
+#' hello()
 # Some useful keyboard shortcuts for package authoring:
 #
 #   Build and Reload Package:  'Ctrl + Shift + B'
@@ -14,5 +15,5 @@
 #   Test Package:              'Ctrl + Shift + T'
 
 hello <- function() {
-  print("Hello, von Web!")
+  print("Hello, Von Weber!")
 }
