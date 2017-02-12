@@ -1,11 +1,7 @@
-# apply function to each columns
-colApply <- function(dat, cols = colnames(dat),
-                     func = function(x) as.numeric(as.character(x))) {
-  dat[cols] <- lapply(dat[cols], func)
-  return(dat)
-}
 
 # parse kegg returned result, and transform them to a dataframe
+
+#' @include trick.R
 parse_KEGG_URL <- function(url,                    # completed url
                             splitPattern = '\\t',  # regular expression in split
                             isNumeric = NULL,      # which columns are numeric
@@ -13,7 +9,7 @@ parse_KEGG_URL <- function(url,                    # completed url
                             ...){                  # additional parameters to readLines()
 
   lines = readLines(url, ...)
-  if(!nzcahr(lines)){
+  if(length(lines) == 1 && !nzchar(lines)){
     return(NULL)
   }
   dtframe = str_split(lines, splitPattern, simplify = T)
