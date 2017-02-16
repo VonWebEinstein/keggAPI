@@ -15,5 +15,5 @@
 #   Test Package:              'Ctrl + Shift + T'
 
 hello <- function() {
-  print("Hello, Von Weber Einstein!")
+  print("Hello, Von Weber")
 }
