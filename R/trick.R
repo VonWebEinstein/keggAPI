@@ -13,3 +13,10 @@ colApply <- function(dat, cols = colnames(dat),
   dat[cols] <- lapply(dat[cols], func)
   return(dat)
 }
+
+# creat directory if doesn't exist
+# dic, completed directory
+validateAndCreatDic <- function(dic){
+  if(!dir.exists(dic))
+    dir.create(dic)
+}

@@ -50,8 +50,7 @@ keggGetSingleImage <- function(keyword, path = getwd(), display = FALSE){
   }
 
   # creat directory if doesn't exist
-  if(!dir.exists(str_c(path, '/image/')))
-    dir.create(str_c(path, '/image/'))
+  validateAndCreatDic(str_c(path, "/keggImage/"))
   # download image
   fileName = str_c(path, '/image/', keyword, imageSuffix)
   download.file(url, fileName, mode = 'wb')
