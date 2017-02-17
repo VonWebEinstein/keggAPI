@@ -15,9 +15,10 @@ LazyData: true
 RoxygenNote: 6.0.1
 Collate: 
     'hello.R'
+    'trick.R'
+    'keggColor.R'
     'parse_kEGG_URL.R'
     'keggConv.R'
-    'trick.R'
     'parse_KEGG_URL.R'
     'keggFind.R'
     'keggGetImage.R'
