@@ -4,7 +4,7 @@ Title: KEGG API
 Version: 0.1.0
 Imports:
     RCurl,
-    stringr
+    stringr,
     utils
 Author: Von Weber
 Maintainer: Von Weber <vonweb@163.com>
