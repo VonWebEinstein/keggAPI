@@ -61,12 +61,19 @@ keggColor(map = "map00400",
           mode = "number")
 
 # give filename, color mode
+#save txt
+download.file(url = "http://www.kegg.jp/kegg/tool/example/hsa_CML.txt",
+              destfile = "hsa_CML.txt",
+              mode ="wb")
 keggColor(map = "hsa05200",
-     filename = "data/hsa_CML.txt")
+          filename = "hsa_CML.txt")
 
 # give filename, number mode
+download.file(url = "http://www.kegg.jp/kegg/tool/example/hsa_CML-COSMIC.txt",
+              destfile = "hsa_CML-COSMIC.txt",
+              mode ="wb")
 keggColor(map = "hsa05200",
-          filename = "data/hsa_CML-COSMIC.txt",
+          filename = "hsa_CML-COSMIC.txt",
           mode = "number")
 
 
