@@ -37,8 +37,23 @@
 #' @examples
 #' # "%09" represents TAB in ASCII code
 #' # Use "%23" in ASCII code instead of "#" for color specification.
+#' # color mode
 #' keggColor(map = "map00400",
 #'           mapping_list = "/1.14.16.1%09,blue/C00079%09,red/C00166%09%23005050")
+#'
+#' # numer mode
+#' keggColor(map = "map00400",
+#'           mapping_list = "/1.14.16.1%091/C00079%092/C00166%093",
+#'           mode = "number")
+#'
+#' # give filename, color mode
+#' keggColor(map = "hsa05200",
+#'      filename = "data/hsa_CML.txt")
+#'
+#' # give filename, number mode
+#' keggColor(map = "hsa05200",
+#'           filename = "data/hsa_CML-COSMIC.txt",
+#'           mode = "number")
 #'
 #'
 keggColor <- function(map,
@@ -125,8 +140,18 @@ keggColor <- function(map,
 
 # convert file to mapping_list
 file2mapping_list <- function(filename){
+
   lines = readLines(filename)
-  lines = str_replace(lines, "\\s", "%09")
+  # delete the first line comment, if exists.
+  if(str_detect(lines[1], "^#")){
+    lines = lines[-1]
+  }
+  # take only the fiest 2 columns
+  lines = str_extract(lines, "[^\\s]+\\s+[^\\s]+")
+  # substitude '\\s' to '%09'(TAB), '#' to '%23'
+  lines = str_replace_all(lines, "\\s", "%09")
+  lines = str_replace_all(lines, "#", "%23")
+
   mapping_list = str_c("/", lines, collapse = "")
 }
 
@@ -164,9 +189,11 @@ num2Color <- function(numbers,
     if(log == 1){
       numbers = log(numbers)
     }
-    colors = gradientRGB(start = minColor, end = maxColor, N = lengh(numbers))
+    colors = gradientRGB(numbers = numbers, start = minColor, end = maxColor)
   }
 
+  # substitute '#' to '%23'
+  colors = str_replace_all(colors, "#", "%23")
   return(colors)
 }
 

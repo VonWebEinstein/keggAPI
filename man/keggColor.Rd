@@ -51,8 +51,23 @@ When mode = "color", we need none of them.
 \examples{
 # "\%09" represents TAB in ASCII code
 # Use "\%23" in ASCII code instead of "#" for color specification.
+# color mode
 keggColor(map = "map00400",
           mapping_list = "/1.14.16.1\%09,blue/C00079\%09,red/C00166\%09\%23005050")
+
+# numer mode
+keggColor(map = "map00400",
+          mapping_list = "/1.14.16.1\%091/C00079\%092/C00166\%093",
+          mode = "number")
+
+# give filename, color mode
+keggColor(map = "hsa05200",
+     filename = "data/hsa_CML.txt")
+
+# give filename, number mode
+keggColor(map = "hsa05200",
+          filename = "data/hsa_CML-COSMIC.txt",
+          mode = "number")
 
 
 }

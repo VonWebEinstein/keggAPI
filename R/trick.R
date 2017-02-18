@@ -22,9 +22,9 @@ validateAndCreatDir <- function(dir){
 }
 
 # gradual colors in RGB
-gradientRGB <- function(start = "#000000",
-                        end = "#ffffff",
-                        N = 10){
+gradientRGB <- function(numbers,
+                        start = "#000000",
+                        end = "#ffffff"){
   l =nchar(start)
   start = str_sub(start, l-5, l)
   end = str_sub(end, l-5, l)
@@ -34,10 +34,13 @@ gradientRGB <- function(start = "#000000",
   end = as.numeric(str_c("0x",c(str_sub(end,1,2),
                                   str_sub(end,3,4),
                                   str_sub(end,5,6))))
+  N = length(numbers)
+  min_number = min(numbers)
+  max_number = max(numbers)
   colors = matrix(0, nrow = N, ncol = 3)
-  colors[,1] = seq(start[1], end[1], length.out = N)
-  colors[,2] = seq(start[2], end[2], length.out = N)
-  colors[,3] = seq(start[3], end[3], length.out = N)
+  colors[,1] = (numbers-min_number)/(max_number-min_number)*(end[1]-start[1])+start[1]
+  colors[,2] = (numbers-min_number)/(max_number-min_number)*(end[2]-start[2])+start[2]
+  colors[,3] = (numbers-min_number)/(max_number-min_number)*(end[3]-start[3])+start[3]
   # convert to string
   colors = matrix(as.character(as.hexmode(round(colors))), nrow = N, ncol = 3)
   colors = str_c("#", str_c(colors[,1], colors[,2], colors[,3]))
