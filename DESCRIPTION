@@ -5,7 +5,7 @@ Version: 0.1.0
 Imports:
     RCurl,
     stringr
-    untils
+    utils
 Author: Von Weber
 Maintainer: Von Weber <vonweb@163.com>
 Description: KEGG web API
