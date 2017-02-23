@@ -31,7 +31,6 @@
 #' keggLink("genes", "K00500")
 #'
 #' # List of human genes in pathway hsa00010
-#'
 #' keggLink("genes", "hsa00010")
 #' # or
 #' keggLink("hsa", "hsa00010")
@@ -67,5 +66,6 @@ keggLink <- function(target_db, source_dbentr, ...){
   }
 
   dtframe = parse_KEGG_URL(url, colNames = colNames, ...)
+  return(dtframe)
 
 }

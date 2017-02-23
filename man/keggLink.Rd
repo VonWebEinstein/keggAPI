@@ -41,7 +41,6 @@ keggLink("pathway", "hsa:10458+ece:Z5100")
 keggLink("genes", "K00500")
 
 # List of human genes in pathway hsa00010
-
 keggLink("genes", "hsa00010")
 # or
 keggLink("hsa", "hsa00010")
