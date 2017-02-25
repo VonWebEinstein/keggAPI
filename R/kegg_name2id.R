@@ -16,7 +16,7 @@
 #' kegg_name2id(c("aaaa","Rb1","pRb"), "mmu")
 
 kegg_name2id <- function(names = "",
-                         database = "hsa",
+                         database = "ko",
                          ignore.case = FALSE){
   dt = sapply(names, FUN = name2id,
               database = database,
@@ -24,7 +24,7 @@ kegg_name2id <- function(names = "",
   return(as.data.frame(t(dt)))
 }
 name2id <- function(name = "",              # single entry to find
-                    database = "hsa",
+                    database = "ko",
                     ignore.case = FALSE){    # in which database
   result = parse_KEGG_URL(
              url=str_c("http://rest.kegg.jp/find/", database, "/", name))
