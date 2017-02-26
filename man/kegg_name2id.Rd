@@ -4,7 +4,7 @@
 \alias{kegg_name2id}
 \title{Convert (standard) names to kegg id}
 \usage{
-kegg_name2id(names = "", database = "hsa", ignore.case = FALSE)
+kegg_name2id(names = "", database = "ko", ignore.case = FALSE)
 }
 \arguments{
 \item{names}{list of names to match.}
