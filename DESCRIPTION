@@ -14,4 +14,15 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-
+Collate: 
+    'hello.R'
+    'trick.R'
+    'keggColor.R'
+    'parse_KEGG_URL.R'
+    'keggConv.R'
+    'keggFind.R'
+    'keggGetImage.R'
+    'keggInfo.R'
+    'keggLink.R'
+    'keggList.R'
+    'kegg_name2id.R'

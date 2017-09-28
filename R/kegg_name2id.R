@@ -18,10 +18,14 @@
 kegg_name2id <- function(names = "",
                          database = "ko",
                          ignore.case = FALSE){
-  dt = sapply(names, FUN = name2id,
-              database = database,
-              ignore.case = ignore.case)
-  return(as.data.frame(t(dt)))
+  dt = do.call(rbind, lapply(names, FUN = name2id,
+                                     database = database,
+                                     ignore.case = ignore.case))
+  dt$id = as.character(dt$id)
+  # dt = sapply(names, FUN = name2id,
+  #             database = database,
+  #             ignore.case = ignore.case)
+  return(dt)
 }
 name2id <- function(name = "",              # single entry to find
                     database = "ko",
@@ -33,7 +37,7 @@ name2id <- function(name = "",              # single entry to find
     # 0 means find nothing, 1 means find one only,
     # 2 means find more than 1, just take the first
     # "" is the matched id
-    return(list(found = 0, id = ""))
+    return(data.frame(found = 0, id = ""))
   }
   # ignore case
   if(ignore.case){
@@ -43,10 +47,10 @@ name2id <- function(name = "",              # single entry to find
   # find exact name
   foundResult = result[str_detect(result[,2], str_c("\\b", name, "\\b")), ]
   if(nrow(foundResult) == 0)
-    return(list(found = 0, id = ""))
+    return(data.frame(found = 0, id = ""))
   if(nrow(foundResult) == 1)
-    return(list(found = 1, id = as.character(foundResult[1,1])))
+    return(data.frame(found = 1, id = as.character(foundResult[1,1])))
   if(nrow(foundResult) > 1)
-    return(list(found = 2, id = as.character(foundResult[1,1])))
+    return(data.frame(found = 2, id = as.character(foundResult[1,1])))
 }
 
