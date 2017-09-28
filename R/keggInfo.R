@@ -5,7 +5,7 @@
 #' @examples
 #' keggInfo()
 #' @import stringr
-#' @export keggInfo
+#' @export
 #'
 
 

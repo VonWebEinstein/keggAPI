@@ -1,7 +1,7 @@
 #' Convert IDs
 #'
 #' Convert KEGG identifiers to/from outside identifiers.
-#' @include parse_kEGG_URL.R
+#' @include parse_KEGG_URL.R
 #' @export
 #' @usage keggConv(target_db, source_db)
 #' keggConv(target_db, dbentries)

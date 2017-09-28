@@ -2,7 +2,7 @@
 #'
 #' Returns a list of entry identifiers and associated definition
 #' for a given database or a given set of database entries.
-#' @include parse_kEGG_URL.R
+#' @include parse_KEGG_URL.R
 #' @export
 
 #' @param x string. Database(s) or entry[ies], using '+' to join.
