@@ -19,8 +19,8 @@ kegg_name2id <- function(names = "",
                          database = "ko",
                          ignore.case = FALSE){
   dt = do.call(rbind, lapply(names, FUN = name2id,
-                                     database = database,
-                                     ignore.case = ignore.case))
+                            database = database,
+                            ignore.case = ignore.case))
   dt$id = as.character(dt$id)
   # dt = sapply(names, FUN = name2id,
   #             database = database,
@@ -45,7 +45,10 @@ name2id <- function(name = "",              # single entry to find
     result = str_to_lower(result)
   }
   # find exact name
-  foundResult = result[str_detect(result[,2], str_c("\\b", name, "\\b")), ]
+  # foundResult = result[str_detect(result[,2], str_c("\\)\\s", name, "[,;<]")), ]
+  splited = str_split(result[,2], '[,;]')
+  whichHas = sapply(splited, function(s)name %in% s)
+  foundResult = result[which(whichHas), ]
   if(nrow(foundResult) == 0)
     return(data.frame(found = 0, id = ""))
   if(nrow(foundResult) == 1)

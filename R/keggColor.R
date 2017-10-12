@@ -125,8 +125,17 @@ keggColor <- function(map,
     }
     # Numerical value
     else{
-      entry = read.table(filename)
-      colors = num2Color(entry[,2], log = log,
+      # entry = read.table(filename)
+      dt = read.table(filename, header = TRUE, stringsAsFactors = FALSE)
+
+      #remove 0s
+      dt = dt[dt[[2]]!=0, ]
+
+      # sort loadings ascending by absolute values
+      index = order(abs(dt[[2]]))
+      dt = dt[index, 1:2]
+
+      colors = num2Color(dt[[2]], log = log,
                          numericalType = numericalType,
                          minColor = minColor,
                          maxColor = maxColor,
@@ -134,8 +143,8 @@ keggColor <- function(map,
                          zeroColor = zeroColor,
                          positiveColor = positiveColor)
       mapping_list = str_c("/",
-                           str_c(entry[,1], colors, sep = "%09", collapse = "/"))
-
+                           str_c(dt[,1], colors, sep = "%09", collapse = "/"))
+      mapping_list = str_replace_all(mapping_list,'mmu:', '')
       downloadPNG(map = map, mapping_list = mapping_list, path = path)
     }
   }
@@ -147,19 +156,39 @@ keggColor <- function(map,
 
 # convert file to mapping_list
 file2mapping_list <- function(filename){
-
-  lines = readLines(filename)
   # delete the first line comment, if exists.
   if(str_detect(lines[1], "^#")){
     lines = lines[-1]
   }
-  # take only the fiest 2 columns
-  lines = str_extract(lines, "[^\\s]+\\s+[^\\s]+")
-  # substitude '\\s' to '%09'(TAB), '#' to '%23'
-  lines = str_replace_all(lines, "\\s", "%09")
-  lines = str_replace_all(lines, "#", "%23")
 
-  mapping_list = str_c("/", lines, collapse = "")
+  dt = read.table(filename, header = TRUE, stringsAsFactors = FALSE)
+  #
+  # #remove 0s
+  # dt = dt[dt[[2]]!=0, ]
+  #
+  # # sort loadings ascending by absolute values
+  # index = order(abs(dt[[2]]))
+  # dt = dt[index, 1:2]
+
+  n = nrow(dt)
+  mapping_list = sapply(1:n, function(k)str_c(dt[k,], collapse = "%09"))
+  mapping_list = str_c(mapping_list, collapse = "/")
+  mapping_list = str_replace_all(mapping_list, "#", "%23")
+  return(mapping_list)
+
+  # lines = readLines(filename)
+  # delete the first line comment, if exists.
+  # if(str_detect(lines[1], "^#")){
+  #   lines = lines[-1]
+  # }
+
+  # # take only the first 2 columns
+  # lines = str_extract(lines, "[^\\s]+\\s+[^\\s]+")
+  # # substitude '\\s' to '%09'(TAB), '#' to '%23'
+  # lines = str_replace_all(lines, "\\s", "%09")
+  # lines = str_replace_all(lines, "#", "%23")
+  #
+  # mapping_list = str_c("/", lines, collapse = "")
 }
 
 downloadPNG <- function(map, mapping_list, path = getwd()){
@@ -183,15 +212,26 @@ num2Color <- function(numbers,
                         zeroColor,
                         positiveColor){
   # Gradation with negative-zero-positive
+  # respectively in positive and negative parts
   if(numericalType == "nzp"){
-    colors = rep(positiveColor, time = length(numbers))
-    colors[numbers < 0] = negativeColor
-    colors[numbers == 0] = zeroColor
+    colors = rep(zeroColor, time = length(numbers))
+    # bound
+    M = max(abs(numbers))
+    # positive
+    pos = c(M, numbers[numbers > 0])
+    pos_color = gradientRGB(pos, zeroColor, positiveColor)
+    colors[numbers > 0] = pos_color[-1]
+
+    # negative
+    neg = c(-M, numbers[numbers < 0])
+    neg_color = gradientRGB(neg, negativeColor, zeroColor)
+    colors[numbers < 0] = neg_color[-1]
+
   }
   # Gradation with minimum-maximum
   else{
     if(log == 1 && any(numbers < 0)){
-      stop("Numbers must be positive, when take log scale.")
+      stop("Numbers must be positive, when taking log scale.")
     }
     if(log == 1){
       numbers = log(numbers)
