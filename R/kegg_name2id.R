@@ -46,7 +46,7 @@ name2id <- function(name = "",              # single entry to find
   }
   # find exact name
   # foundResult = result[str_detect(result[,2], str_c("\\)\\s", name, "[,;<]")), ]
-  splited = str_split(result[,2], '[,;]')
+  splited = str_split(result[,2], '[,;]\\s')
   whichHas = sapply(splited, function(s)name %in% s)
   foundResult = result[which(whichHas), ]
   if(nrow(foundResult) == 0)

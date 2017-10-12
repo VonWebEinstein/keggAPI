@@ -18,5 +18,18 @@ extractComponent <- function(url){
   }
   # read url
   str = content(GET(url), "text")
-  unique(str_match_all(str, '\\d\\s\\((.*?)\\)[,"&]')[[1]][,2])
+  m = str_match_all(str, '(C?\\d+)\\s\\(([^\\)]*?)\\)[,"]')[[1]]
+  index = order(m[,2])
+  m = m[index,]
+
+  # wipe our redundance
+  len = nrow(m)
+  m_c2 = c(m[, 2], "XXOO")
+  index = which(sapply(1:(length(m_c2)-1), function(k)m_c2[k] != m_c2[k+1]))
+
+  dt = as.data.frame(m[index,-1], stringsAsFactors = FALSE)
+  colnames(dt) = c("ID", "symbol")
+
+  return(dt)
+
 }
