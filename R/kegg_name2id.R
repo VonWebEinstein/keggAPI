@@ -30,6 +30,11 @@ kegg_name2id <- function(names = "",
 name2id <- function(name = "",              # single entry to find
                     database = "ko",
                     ignore.case = FALSE){    # in which database
+  
+  # check params
+  if(!str_detect(name, "\\w")){
+    return(data.frame(found = -1, id = ""))
+  }
   result = parse_KEGG_URL(
              url=str_c("http://rest.kegg.jp/find/", database, "/", name))
   # empty result or not
