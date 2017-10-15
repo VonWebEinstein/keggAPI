@@ -1,14 +1,15 @@
-#' Convert (standard) names to kegg id
+#' Convert gene(compound, pathway, drug, etc.) symbol or name to kegg id
 #'
-#' As the stardand names are not unique in a sense. Here we refer to the characters
-#' that wo can match in kegg database. And if \code{database} is specified to concrete
+#' As the symbols and names are not unique in a sense. Here we refer to the characters
+#' that wo can match in kegg database strictly. And if \code{database} is specified to concrete
 #' sub-database, conversion is faster.
 #' @param names list of names to match.
 #' @param database string. Database to search in.
 #' @param ignore.case logical. Case sensitivity or not.
 #' @return dataframe. \code{found} represents different status. \code{0}: doesn't
 #' find something matched. \code{1}: found only 1 entry match. \code{2}: found more
-#' than 1 entries matched, and we only take the first matched id.
+#' than 1 entries matched, and we only take the first matched id. \code{-1}:
+#' Bad request.
 #' @include parse_KEGG_URL.R
 #' @export
 #' @examples
@@ -30,7 +31,7 @@ kegg_name2id <- function(names = "",
 name2id <- function(name = "",              # single entry to find
                     database = "ko",
                     ignore.case = FALSE){    # in which database
-  
+
   # check params
   if(!str_detect(name, "\\w")){
     return(data.frame(found = -1, id = ""))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/kegg_name2id.R
 \name{kegg_name2id}
 \alias{kegg_name2id}
-\title{Convert (standard) names to kegg id}
+\title{Convert gene(compound, pathway, drug, etc.) symbol or name to kegg id}
 \usage{
 kegg_name2id(names = "", database = "ko", ignore.case = FALSE)
 }
@@ -16,11 +16,12 @@ kegg_name2id(names = "", database = "ko", ignore.case = FALSE)
 \value{
 dataframe. \code{found} represents different status. \code{0}: doesn't
 find something matched. \code{1}: found only 1 entry match. \code{2}: found more
-than 1 entries matched, and we only take the first matched id.
+than 1 entries matched, and we only take the first matched id. \code{-1}:
+Bad request.
 }
 \description{
-As the stardand names are not unique in a sense. Here we refer to the characters
-that wo can match in kegg database. And if \code{database} is specified to concrete
+As the symbols and names are not unique in a sense. Here we refer to the characters
+that wo can match in kegg database strictly. And if \code{database} is specified to concrete
 sub-database, conversion is faster.
 }
 \examples{
