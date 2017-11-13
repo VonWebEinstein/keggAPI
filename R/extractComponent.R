@@ -18,7 +18,7 @@ extractComponent <- function(url){
   }
   # read url
   str = content(GET(url), "text")
-  m = str_match_all(str, '(C?\\d+)\\s\\(([^\\)]*?)\\)[,"]')[[1]]
+  m = str_match_all(str, '([A-Z]?\\d+)\\s\\(([^\\)]*?)\\)[,"]')[[1]]
   index = order(m[,2])
   m = m[index,]
 
