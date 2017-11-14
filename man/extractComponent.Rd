@@ -2,15 +2,26 @@
 % Please edit documentation in R/extractComponent.R
 \name{extractComponent}
 \alias{extractComponent}
+\alias{matchSymbol}
 \title{extract all components from a kegg pathway}
 \usage{
 extractComponent(url)
+
+matchSymbol(s1, s2, optional = "[0-9]?", ...)
 }
 \arguments{
 \item{url}{string. String of pathway ID or detailed page.}
+
+\item{s1, s2}{string}
+
+\item{...}{optional arguments in \code{grep}}
 }
 \description{
 extract all components from a kegg pathway
+}
+\details{
+\code{matchSymbol} matches each item of \code{s1} in
+\code{s2}, optional suffix \code{optional} appended.
 }
 \examples{
 c1 = extractComponent("mmu04933")
@@ -19,4 +30,7 @@ url = "http://www.kegg.jp/kegg-bin/highlight_pathway?map=mmu04933"
 c2 = extractComponent(url)
 
 
+############
+s2 = c("ab","ab1","ab2", "bb1","vv")
+matchSymbol(c("ab", "bb"), s2)
 }

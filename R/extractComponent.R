@@ -31,5 +31,26 @@ extractComponent <- function(url){
   colnames(dt) = c("ID", "symbol")
 
   return(dt)
+}
 
+#' @export
+#' @rdname extractComponent
+#' @param s1,s2 string
+#' @param ... optional arguments in \code{grep}
+#' @details \code{matchSymbol} matches each item of \code{s1} in
+#' \code{s2}, optional suffix \code{optional} appended.
+
+#' @examples
+#' ############
+#' s2 = c("ab","ab1","ab2", "bb1","vv")
+#' matchSymbol(c("ab", "bb"), s2)
+
+
+matchSymbol <- function(s1, s2, optional = '[0-9]?',...){
+  # search each of s1 in s2
+  # strings can be appended a suffix in OPTIONAL
+  s1 = str_c("^", s1, optional, "$")
+  tmp = unlist(lapply(s1, grep, s2, value = TRUE, ...))
+
+  return(tmp)
 }
