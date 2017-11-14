@@ -18,7 +18,7 @@ extractComponent <- function(url){
   }
   # read url
   str = content(GET(url), "text")
-  m = str_match_all(str, '([A-Z]?\\d+)\\s\\(([^\\)]*?)\\)[,"]')[[1]]
+  m = str_match_all(str, '([A-Z]?\\d{3,})\\s\\(([^\\)]*?)\\)[,"]')[[1]]
   index = order(m[,2])
   m = m[index,]
 
@@ -38,7 +38,7 @@ extractComponent <- function(url){
 #' @param s1,s2 string
 #' @param ... optional arguments in \code{grep}
 #' @details \code{matchSymbol} matches each item of \code{s1} in
-#' \code{s2}, optional suffix \code{optional} appended.
+#' \code{s2}, optional suffix \code{optional} appended. Output symbols comes from \code{s2}.
 
 #' @examples
 #' ############
@@ -49,8 +49,15 @@ extractComponent <- function(url){
 matchSymbol <- function(s1, s2, optional = '[0-9]?',...){
   # search each of s1 in s2
   # strings can be appended a suffix in OPTIONAL
-  s1 = str_c("^", s1, optional, "$")
-  tmp = unlist(lapply(s1, grep, s2, value = TRUE, ...))
+  t1 = str_c("^", s1, optional, "$")
+  tmp1 = unlist(lapply(t1, grep, s2, value = TRUE, ...))
+  
+  t2 = str_c("^", s2, optional, "$")
+  tmp2l = sapply(t2, grepl, s1, ...)
+  if(!is.matrix(tmp2l))
+	tmp2l = matrix(tmp2l, nrow = 1)
+  tmp2 = s2[apply(tmp2l, 2, any)]
+  tmp = unique(c(tmp1, tmp2))
 
   return(tmp)
 }
